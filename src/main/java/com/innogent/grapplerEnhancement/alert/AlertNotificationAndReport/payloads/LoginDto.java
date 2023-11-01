@@ -17,7 +17,7 @@ public class LoginDto {
     private String email;
 
     @NotBlank(message = "Password is mandatory field")
-    @Size(min=4,max = 10,message = "password must be min 4 chars and less than 10 chars")
+//    @Size(min=3,max = 10,message = "password must be min 3 chars and less than 10 chars")
     private String password;
 
 }

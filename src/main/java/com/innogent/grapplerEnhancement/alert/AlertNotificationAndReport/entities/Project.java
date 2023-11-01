@@ -11,7 +11,6 @@ import java.util.List;
 @NoArgsConstructor @AllArgsConstructor
 @ToString
 @Entity
-@Table(name = "Project")
 public class Project {
 
     @Id

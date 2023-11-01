@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Rule")
 public class Rule {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -41,7 +40,7 @@ public class Rule {
     private String action;
 
     @Column(nullable = false)
-    private String desription;
+    private String description;
 
     @Column(nullable = false)
     private String severity;
@@ -62,5 +61,4 @@ public class Rule {
 
     @Column(columnDefinition = "boolean default false")
     private Boolean isDeleted=false;
-
 }

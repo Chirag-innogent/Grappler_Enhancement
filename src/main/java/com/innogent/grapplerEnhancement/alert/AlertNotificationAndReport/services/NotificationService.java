@@ -55,9 +55,9 @@ public class NotificationService {
 
         note.setTitle(rule.getEntity()+" "+rule.getTrigger()+" "+rule.getCondition());
         if(ticketFinal==null)
-            note.setDescription(project.getName()+" : "+rule.getDesription());
+            note.setDescription(project.getName()+" : "+rule.getDescription());
         else
-            note.setDescription(ticketFinal.getName()+" : "+rule.getDesription());
+            note.setDescription(ticketFinal.getName()+" : "+rule.getDescription());
 
         note.setChannels(rule.getChannel());
         note.setCreationDate(LocalDateTime.now());

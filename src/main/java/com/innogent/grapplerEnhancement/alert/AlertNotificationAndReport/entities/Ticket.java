@@ -12,7 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 @Entity
-@Table(name = "Ticket")
 public class Ticket {
 
     @Id

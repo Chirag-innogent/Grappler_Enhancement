@@ -21,16 +21,16 @@ public class RuleDto {
     @NotBlank(message = "name  is mandatory field")
     private String name;
 
-    //    @NotEmpty(message = "Source is mandatory field")
+//    @NotEmpty(message = "Trigger is mandatory field")
     private Trigger trigger=Trigger.EVENT;
 
     @NotBlank(message = "Scope is mandatory field")
     private String scope;
 
-    @NotBlank(message = "identity is mandatory field")
+    @NotBlank(message = "entity is mandatory field")
     private String entity;
 
-    @NotBlank(message = "trigger is mandatory field")
+    @NotBlank(message = "Filed is mandatory field")
     private String field;
 
     @NotBlank(message = "condition is mandatory field")
@@ -40,7 +40,7 @@ public class RuleDto {
     private String action;
 
     @NotBlank(message = "description is mandatory field")
-    private String desription;
+    private String description;
 
     @NotBlank(message = "severity is mandatory field")
     private String severity;

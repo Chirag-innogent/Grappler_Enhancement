@@ -9,7 +9,6 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 @Entity
-@Table(name = "TriggerOption")
 public class TriggerOptions {
 
     @Id
@@ -24,5 +23,4 @@ public class TriggerOptions {
 
     @Column(nullable = false)
     private String triggerCondition;
-
 }

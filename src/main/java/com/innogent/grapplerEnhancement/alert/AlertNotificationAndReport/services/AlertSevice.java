@@ -68,9 +68,9 @@ public class AlertSevice {
                 alert.setType(AlertType.INFORMATIONAL);
 
             if (ticketFinal == null)
-                alert.setDescription(project.getName() + " : " + rule.getDesription());
+                alert.setDescription(project.getName() + " : " + rule.getDescription());
             else
-                alert.setDescription(ticketFinal.getName() + " : " + rule.getDesription());
+                alert.setDescription(ticketFinal.getName() + " : " + rule.getDescription());
 
             alert.setChannels(rule.getChannel());
 
@@ -123,9 +123,4 @@ public class AlertSevice {
         alertRepositary.save(alert);
         return modelMapper.map(alert, AlertDtoInfo.class);
     }
-
-
-//    public List<Alert> getUserAlert(Long userId) {
-//        return alertRepositary.findAllByUserID(userId);
-//    }
 }

@@ -50,7 +50,7 @@ public class RuleService {
 
     public RuleDto createRule(RuleDto ruleDto) {
         logger.info("Creating a new rule.");
-        List<Rule> ruleExist = ruleRepositary.findByTriggerAndEntityAndFieldAndConditionAndActionAndIsDeleted(ruleDto.getTrigger(), ruleDto.getEntity(), ruleDto.getField(), ruleDto.getCondition(),ruleDto.getAction(), false);
+        List<Rule> ruleExist = ruleRepositary.findByTriggerAndEntityAndFieldAndConditionAndIsDeleted(ruleDto.getTrigger(), ruleDto.getEntity(), ruleDto.getField(), ruleDto.getCondition(), false);
 
         for(Rule r:ruleExist)
         {
@@ -106,8 +106,8 @@ public class RuleService {
         if(ruleDto.getAction()!=null)
             nonUpdatedRule.setAction(ruleDto.getAction());
 
-        if(ruleDto.getDesription()!=null)
-            nonUpdatedRule.setDesription(ruleDto.getDesription());
+        if(ruleDto.getDescription()!=null)
+            nonUpdatedRule.setDescription(ruleDto.getDescription());
 
         if(ruleDto.getSeverity()!=null)
             nonUpdatedRule.setSeverity(ruleDto.getSeverity());
@@ -138,8 +138,8 @@ public class RuleService {
         return ruleDto;
     }
 
-    public List<Rule> getRuleByScope(Trigger trigger, String scope, String entity, String field, String condition,String action) {
-        List<Rule> rule = ruleRepositary.findByTriggerAndEntityAndFieldAndConditionAndActionAndIsDeleted(trigger, entity, field, condition, action,false);
+    public List<Rule> getRuleByScope(Trigger trigger, String scope, String entity, String field, String condition) {
+        List<Rule> rule = ruleRepositary.findByTriggerAndEntityAndFieldAndConditionAndIsDeleted(trigger, entity, field, condition, false);
         for(Rule r:rule)
         {
             if(!scope.equalsIgnoreCase(r.getScope())){
