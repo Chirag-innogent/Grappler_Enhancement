@@ -11,11 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class AlertSevice {
@@ -68,9 +65,9 @@ public class AlertSevice {
                 alert.setType(AlertType.INFORMATIONAL);
 
             if (ticketFinal == null)
-                alert.setDescription(project.getName() + " : " + rule.getDesription());
+                alert.setDescription(project.getName() + " : " + rule.getDescription());
             else
-                alert.setDescription(ticketFinal.getName() + " : " + rule.getDesription());
+                alert.setDescription(ticketFinal.getName() + " : " + rule.getDescription());
 
             alert.setChannels(rule.getChannel());
 
@@ -86,22 +83,37 @@ public class AlertSevice {
             for (String s : users) {
                 if (s.equalsIgnoreCase("ASSIGNED_TO")) {
                     if (rule.getEntity().equalsIgnoreCase("PROJECT")) {
-                        project.getUsers().forEach((user) -> userList.add(user));
+                        project.getUsers().forEach((user) -> {
+                            if (!userList.contains(user))
+                                userList.add(user);
+                        });
                     } else if (ticketFinal != null) {
-                        ticketFinal.getAssignees().forEach((user) -> userList.add(user));
+                        ticketFinal.getAssignees().forEach((user) -> {
+                            if (!userList.contains(user))
+                                userList.add(user);
+                        });
                     }
                 } else if (s.equalsIgnoreCase("ASSIGNED_BY")) {
                     if (rule.getEntity().equalsIgnoreCase("PROJECT")) {
 
                     } else if (ticketFinal != null) {
-                        userList.add(ticketFinal.getAssignedBy());
+                            if (!userList.contains(ticketFinal.getAssignedBy()))
+                                userList.add(ticketFinal.getAssignedBy());
                     }
                 } else if (s.equalsIgnoreCase("BOTH")) {
                     if (rule.getEntity().equalsIgnoreCase("PROJECT")) {
-                        project.getUsers().forEach((user) -> userList.add(user));
+                        project.getUsers().forEach((user) -> {
+                            if (!userList.contains(user))
+                                userList.add(user);
+                        });
                     } else if (ticketFinal != null) {
-                        ticketFinal.getAssignees().forEach((user) -> userList.add(user));
-                        userList.add(ticketFinal.getAssignedBy());
+                        ticketFinal.getAssignees().forEach((user) -> {
+                            if (!userList.contains(user))
+                                userList.add(user);
+                        });
+
+                            if (!userList.contains(ticketFinal.getAssignedBy()))
+                                userList.add(ticketFinal.getAssignedBy());
                     }
                 } else {
                     User byId = userRepositary.findById(Long.valueOf(s))

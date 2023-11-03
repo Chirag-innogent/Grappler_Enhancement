@@ -106,8 +106,8 @@ public class RuleService {
         if(ruleDto.getAction()!=null)
             nonUpdatedRule.setAction(ruleDto.getAction());
 
-        if(ruleDto.getDesription()!=null)
-            nonUpdatedRule.setDesription(ruleDto.getDesription());
+        if(ruleDto.getDescription()!=null)
+            nonUpdatedRule.setDescription(ruleDto.getDescription());
 
         if(ruleDto.getSeverity()!=null)
             nonUpdatedRule.setSeverity(ruleDto.getSeverity());
@@ -150,4 +150,18 @@ public class RuleService {
         }
         return rule;
     }
+
+    public List<Rule> getRule(Trigger trigger, String scope, String entity, String field, String condition) {
+        List<Rule> rule = ruleRepositary.findByTriggerAndEntityAndFieldAndConditionAndIsDeletedAndIsEnabled(trigger, entity, field, condition,false,true);
+        for(Rule r:rule)
+        {
+            if(!scope.equalsIgnoreCase(r.getScope())){
+                if(!(r.getScope().equalsIgnoreCase("global"))){
+                    rule.remove(r);
+                }
+            }
+        }
+        return rule;
+    }
+
 }

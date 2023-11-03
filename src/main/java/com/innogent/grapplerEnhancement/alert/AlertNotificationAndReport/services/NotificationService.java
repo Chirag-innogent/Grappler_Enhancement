@@ -55,9 +55,9 @@ public class NotificationService {
 
         note.setTitle(rule.getEntity()+" "+rule.getTrigger()+" "+rule.getCondition());
         if(ticketFinal==null)
-            note.setDescription(project.getName()+" : "+rule.getDesription());
+            note.setDescription(project.getName()+" : "+rule.getDescription());
         else
-            note.setDescription(ticketFinal.getName()+" : "+rule.getDesription());
+            note.setDescription(ticketFinal.getName()+" : "+rule.getDescription());
 
         note.setChannels(rule.getChannel());
         note.setCreationDate(LocalDateTime.now());
@@ -71,25 +71,42 @@ public class NotificationService {
         for(String s:users){
             if(s.equalsIgnoreCase("ASSIGNED_TO")){
                 if(rule.getEntity().equalsIgnoreCase("PROJECT")){
-                    project.getUsers().forEach((user)->userList.add(user));
+                    project.getUsers().forEach((user)-> {
+                                if (!userList.contains(user))
+                                    userList.add(user);
+                            }
+                    );
                 }else if(ticketFinal!=null){
-                    ticketFinal.getAssignees().forEach((user)->userList.add(user));
+                    ticketFinal.getAssignees().forEach((user)->{
+                        if (!userList.contains(user))
+                            userList.add(user);
+                    });
                 }
             }else if(s.equalsIgnoreCase("ASSIGNED_BY")){
                 if(rule.getEntity().equalsIgnoreCase("PROJECT")){
                 }else if(ticketFinal!=null){
-                    userList.add(ticketFinal.getAssignedBy()) ;
+                    if (!userList.contains(ticketFinal.getAssignedBy()))
+                        userList.add(ticketFinal.getAssignedBy());
                 }
             }else if(s.equalsIgnoreCase("BOTH")){
                 if(rule.getEntity().equalsIgnoreCase("PROJECT")){
-                    project.getUsers().forEach((user)->userList.add(user));
+                    project.getUsers().forEach((user)->{
+                        if (!userList.contains(user))
+                            userList.add(user);
+                    });
                 }else if(ticketFinal!=null){
-                    ticketFinal.getAssignees().forEach((user)->userList.add(user));
-                    userList.add(ticketFinal.getAssignedBy()) ;
+                    ticketFinal.getAssignees().forEach((user)->{
+                        if (!userList.contains(user))
+                            userList.add(user);
+                    });
+                    if (!userList.contains(ticketFinal.getAssignedBy()))
+                        userList.add(ticketFinal.getAssignedBy());
+
                 }
             }else{
-                    User byId = userRepositary.findById(Long.valueOf(s)).orElseThrow(() -> new ResourceNotFoundException("User", "id", Long.valueOf(s)));
-                    userList.add(byId);
+                User user = userRepositary.findById(Long.valueOf(s)).orElseThrow(() -> new ResourceNotFoundException("User", "id", Long.valueOf(s)));
+                if (!userList.contains(user))
+                    userList.add(user);
             }
         }
         note.setUserList(userList);
@@ -106,4 +123,12 @@ public class NotificationService {
     }
 
 
+    public List<NotificationInfo> userNotification(Long userId) {
+//        User user=userRepositary.findById(userId)
+//                .orElseThrow(() -> new ResourceNotFoundException("User","id",userId));
+
+        List<Notification> notificationList=notificationRepositary.findAllByUserList_IdOrderByCreationDateDesc(userId);
+        List<NotificationInfo> notificationInfoList= notificationList.stream().map(notification -> modelMapper.map(notification,NotificationInfo.class)).toList();
+        return notificationInfoList;
+    }
 }

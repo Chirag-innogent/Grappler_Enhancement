@@ -9,7 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 @Entity
-@Table(name = "TriggerOption")
+//@Table(name = "TriggerOption")
 public class TriggerOptions {
 
     @Id

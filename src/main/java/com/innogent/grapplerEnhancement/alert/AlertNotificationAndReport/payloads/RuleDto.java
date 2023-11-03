@@ -40,7 +40,7 @@ public class RuleDto {
     private String action;
 
     @NotBlank(message = "description is mandatory field")
-    private String desription;
+    private String description;
 
     @NotBlank(message = "severity is mandatory field")
     private String severity;

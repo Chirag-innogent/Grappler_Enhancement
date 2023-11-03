@@ -34,17 +34,17 @@ public class LoginController {
             UserDto userDto = loginService.startLogin(loginDto);
             if(userDto!=null){
                 logger.info("Successfully login");
-                return  new ResponseEntity<>(new ApiResponse(userDto,"Successfully login",true), HttpStatus.OK);
+                return  new ResponseEntity<>(new ApiResponse<>(userDto,"Successfully login",true), HttpStatus.OK);
             }
             else{
                 logger.info("Email or password is inCorrect!");
-                return  new ResponseEntity<>(new ApiResponse(null,"Email or password is inCorrect!",false), HttpStatus.NOT_FOUND);
+                return  new ResponseEntity<>(new ApiResponse<>(null,"Email or password is inCorrect!",false), HttpStatus.NOT_FOUND);
             }
 
         }
         catch (Exception e) {
             logger.error("An error occurred while login : " + e.getMessage());
-            return new ResponseEntity( new ApiResponse(null,e.getMessage(),false), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>( new ApiResponse<>(null,e.getMessage(),false), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
